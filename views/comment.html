@@ -6,13 +6,13 @@
     <link rel = 'stylesheet' href = '/styles.css'/>
     <title>Comment</title>
 </head>
-<body>
-    <form action = "/comment" method = "POST">
+<body class = "col">
+    <form action = "/comment" method = "POST" class = "col">
         <h1 for = "comment">Comment</h1>
         <p>Adding a comment to {{ image.title }}</p>
-        <textarea type = "text" id = "comment" name = "comment" required></textarea>
+        <textarea type = "text" id = "comment" name = "comment" required autofocus></textarea>
         <input type = "hidden" id = "id" name = "id" value = "{{ image.id }}">
-        <button type = "submit">Submit</button>
+        <button type = "submit">Comment</button>
     </form>
 </body>
 

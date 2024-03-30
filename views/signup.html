@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel='stylesheet' href='./styles.css' />
+    <title>Signup</title>
+</head>
+
+<body class="col">
+    <h1>Create an Account</h1>
+    <form action="/signup" method="POST" class="col" enctype="multipart/form-data">
+        <div class="igroup">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="igroup">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="igroup">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="igroup">
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+        </div>
+        <div class="igroup">
+            <label for="pfp">Upload a profile picture</label>
+            <input type="file" id="pfp" name="pfp">
+        </div>
+        <div class="fgroup">
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+        <div class="fgroup">
+            <button type="submit" >Sign Up</button>
+        </div>
+    </form>
+
+    <script>
+        function checkError(){
+            var url = new URL(window.location.href);
+            var q = new URLSearchParams(url.search);
+            console.log(url.search)
+            if(q.has("error")){
+                alert(q.get("error"));
+            }
+        }
+        checkError();
+        function checkPasswords(e) {
+            
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert("Passwords do not match!");
+                return false;
+            }
+            return true;
+        }
+        document.querySelector("form").addEventListener("submit", checkPasswords)
+    </script>
+</body>
+
+</html>

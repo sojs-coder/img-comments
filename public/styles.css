@@ -1,7 +1,67 @@
 form{
-    width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+    max-width: 500px;
     padding: 50px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    min-height: 500px;
+    font-size: 20px;
+}
+.col{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.center-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+}
+.igroup{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px;
+
+}
+.fgroup{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin: 8px;
+}
+.fgroup-col{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin: 8px;
+}
+input{
+    padding: 10px;
+    border: 1px solid green;
+    font-size: 18px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin: 8px;
+}
+.block{
+    width: 90%;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
     box-sizing: border-box;
 }
 body{
@@ -14,7 +74,7 @@ body{
 }
 textarea{
     width: 100%;
-    height: 70vh;
+    height: 200px;
     border: 3px solid green;
     border-radius: 6px;
     margin: 8px;
@@ -32,4 +92,22 @@ button[type="submit"]{
     cursor: pointer;
     box-sizing: border-box;
     margin: 8px;
+}
+body,html{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+input[type="file"]{
+display: none;
+}
+label[for="pfp"]{
+    padding: 10px;
+    border: 1px solid green;
+    font-size: 18px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin: 8px;
+    cursor: pointer;
 }

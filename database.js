@@ -1,12 +1,11 @@
 const sqlite = require("sqlite3");
-const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const {supabase} = require('./supabaseClient.js');
 
 class Users {
     static tableName = 'users';
     static async addUser(username, password, email, pfp, admin, verified) {
-        const res = await supabase.from(this.tableName).insert([{ username, password, email, pfp, admin, verified }]).select('id');
-        return res.data[0].id;
+        const res = await supabase.from(this.tableName).insert([{ username, password, email, pfp, admin, verified, timestamp: new Date().getTime() }]).select('*');
+        return res.data[0];
 
     }
     static async login(email, password) {
@@ -85,10 +84,9 @@ class Users {
 }
 class Images {
     static tableName = 'images';
-    static async addImage(creatorID, url = null, width, height, title) {
+    static async addImage(creatorID, width, height, title, nameRequired, loggedInRequired, verifiedRequired, filterBadWords) {
         try {
-            var fUrl = url || `https://localhost:3000/comments/${this.numImages}`;
-            var res = await supabase.from(this.tableName).insert([{ creatorID, url: fUrl, width, height, title }]).select('id');
+            var res = await supabase.from(this.tableName).insert([{ creatorID, width, height, title,nameRequired, loggedInRequired, verifiedRequired, filterBadWords }]).select('id');
             console.log(res);
             return res.data[0].id;
         } catch (error) {
@@ -131,9 +129,9 @@ class Images {
 }
 class Comments {
     static tableName = 'comments';
-    static async addComment(userID, comment, imageID, replyTo = null) {
+    static async addComment(userID, comment, imageID, authorName, replyTo = null) {
         try {
-            var res = await supabase.from(this.tableName).insert([{ creatorID: userID, comment, imageID, replyTo }]).select('id');
+            var res = await supabase.from(this.tableName).insert([{ creatorID: userID, comment, imageID, replyTo, authorName }]).select('id');
             console.log(res);
             return res.data[0].id;
         } catch (error) {
