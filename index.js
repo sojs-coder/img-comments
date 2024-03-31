@@ -8,7 +8,7 @@ const session = require("express-session");
 const nunjucks = require("nunjucks");
 const morgan = require("morgan");
 const multer = require('multer');
-
+const badWords = require("bad-words");
 const { supabaseStorage } = require("./storage.js");
 
 const upload = multer({
@@ -172,7 +172,12 @@ app.post("/comment", express.urlencoded({ extended: true }), async (req, res) =>
     } else {
         uString = "Anonymous";
     }
-    console.log(req.session)
+    var on = await Images.getImageById(parseInt(id));
+    if(on.filterBadWords) {
+        var filter = new badWords();
+        comment = filter.clean(comment)
+    }
+    console.log(req.session);
     await Comments.addComment(req.session.loggedIn, comment, parseInt(id), uString, parseInt(replyTo) || null);
     res.redirect(`/comments/${id}`);
 });

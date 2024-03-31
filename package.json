@@ -12,6 +12,7 @@
     "dependencies": {
         "@supabase/supabase-js": "^2.41.1",
         "@types/node": "^18.0.6",
+        "bad-words": "^3.0.4",
         "canvas": "^2.11.2",
         "dotenv": "^16.4.5",
         "express": "^4.19.2",
