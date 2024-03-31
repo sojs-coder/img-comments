@@ -126,7 +126,7 @@ app.get("/comments/:id", nocache(), async (req, res) => {
     res.send(can.toBuffer());
 });
 app.get("/", (req, res) => {
-    res.send("Hello, world");
+    res.render("index.html")
 });
 app.get("/gatherName", (req, res) => {
     res.render("gatherName.html");

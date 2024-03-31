@@ -111,3 +111,14 @@ label[for="pfp"]{
     margin: 8px;
     cursor: pointer;
 }
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+a{
+    text-decoration: underline;
+    color: green;
+}
