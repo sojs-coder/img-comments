@@ -78,7 +78,9 @@ app.get("/getCode/:id", async (req, res) => {
     var image = await Images.getImageById(req.params.id);
     res.render("getCode.html", { image });
 });
-app.get("/comments/:id", nocache(), async (req, res) => {
+app.get("/comments/:id.:ext", nocache(), imageRoute);
+app.get("/comments/:id", nocache(), imageRoute);
+async function imageRoute(req, res) {
     if (req.session.goto) {
         req.session.goto = null;
     }
@@ -123,8 +125,10 @@ app.get("/comments/:id", nocache(), async (req, res) => {
     var copyText = `Made with image-comments`;
     ctx.fillText(copyText, can.width - ctx.measureText(copyText).width - 10, can.height - 10);
     res.set("Content-Type", "image/jpeg");
+    res.set("Cache-Control", "no-store");
+
     res.send(can.toBuffer());
-});
+}
 app.get("/", (req, res) => {
     res.render("index.html")
 });
