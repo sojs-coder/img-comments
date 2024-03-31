@@ -113,9 +113,9 @@ label[for="pfp"]{
 }
 .home{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     height: 100vh;
 }
 a{

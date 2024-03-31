@@ -247,18 +247,20 @@ async function printComment(can, ctx, comment, nextLineY, buffer = 0, isReply = 
         var uWidth = metrics.width;
         if (username != "Anonymous" && !isReply) {
             var user = await Users.getUserById(comment.creatorID);
-            var pfp = user.pfp;
-            console.log(pfp);
-            var img = await canvas.loadImage(pfp);
-            var uHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(20, nextLineY - uHeight + 10, 10, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.clip();
-            ctx.drawImage(img, 10, nextLineY - uHeight, 20, 20);
-            ctx.restore();
-            buffer += 25;
+            if (user) {
+                var pfp = user.pfp;
+                console.log(pfp);
+                var img = await canvas.loadImage(pfp);
+                var uHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(20, nextLineY - uHeight + 10, 10, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.clip();
+                ctx.drawImage(img, 10, nextLineY - uHeight, 20, 20);
+                ctx.restore();
+                buffer += 25;
+            }
         }
         ctx.fillText(username + ": ", 10 + buffer, nextLineY);
         var height = printAtWordWrap(ctx, comment.comment, 10 + uWidth + buffer, nextLineY, 25, can.width - 20 - uWidth);
