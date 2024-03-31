@@ -15,7 +15,8 @@ const upload = multer({
     storage: supabaseStorage()
 });
 app.use(morgan("dev"));
-
+app.set("view engine", "html");	
+app.set("etag",false);
 app.use(express.static("public"));
 nunjucks.configure("views", {
     autoescape: true,
@@ -78,8 +79,20 @@ app.get("/getCode/:id", async (req, res) => {
     var image = await Images.getImageById(req.params.id);
     res.render("getCode.html", { image });
 });
-app.get("/comments/:id.:ext", nocache(), imageRoute);
-app.get("/comments/:id", nocache(), imageRoute);
+app.get("/comments/:id.:ext",(req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Surrogate-Control', 'no-store');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+}, imageRoute);
+app.get("/comments/:id", (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Surrogate-Control', 'no-store');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+}, imageRoute);
 async function imageRoute(req, res) {
     if (req.session.goto) {
         req.session.goto = null;
@@ -125,7 +138,7 @@ async function imageRoute(req, res) {
     var copyText = `Made with image-comments`;
     ctx.fillText(copyText, can.width - ctx.measureText(copyText).width - 10, can.height - 10);
     res.set("Content-Type", "image/jpeg");
-    res.set("Cache-Control", "no-store");
+
 
     res.send(can.toBuffer());
 }
@@ -173,7 +186,7 @@ app.post("/comment", express.urlencoded({ extended: true }), async (req, res) =>
         uString = "Anonymous";
     }
     var on = await Images.getImageById(parseInt(id));
-    if(on.filterBadWords) {
+    if (on.filterBadWords) {
         var filter = new badWords();
         comment = filter.clean(comment)
     }
